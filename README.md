@@ -3,7 +3,6 @@
 - github : https://github.com/Rexshack-RedM
 
 # IPLocator
-
 - github : https://github.com/iplocator
 
 # Dependancies
