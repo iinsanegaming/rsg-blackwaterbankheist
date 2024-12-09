@@ -17,7 +17,7 @@ AddEventHandler('rsg-bwbankheist:server:reward', function()
         TriggerClientEvent("inventory:client:ItemBox", src, RSGCore.Shared.Items[item2], "add")
 		Player.Functions.AddItem(item3, Config.SmallRewardAmount)
         TriggerClientEvent("inventory:client:ItemBox", src, RSGCore.Shared.Items[item3], "add")
-		TriggerClientEvent('RSGCore:Notify', src, 'small loot reward this time!', 'primary')
+		lib.notify({ title = 'Loot Reward', description = 'Small loot reward this time!', type = 'primary', duration = 5000 })
 	elseif chance >= 50 and chance <= 80 then -- medium reward
 		local item1 = Config.RewardItems[math.random(1, #Config.RewardItems)]
 		local item2 = Config.RewardItems[math.random(1, #Config.RewardItems)]
@@ -29,7 +29,7 @@ AddEventHandler('rsg-bwbankheist:server:reward', function()
         TriggerClientEvent("inventory:client:ItemBox", src, RSGCore.Shared.Items[item2], "add")
 		Player.Functions.AddItem(item3, Config.MediumRewardAmount)
         TriggerClientEvent("inventory:client:ItemBox", src, RSGCore.Shared.Items[item3], "add")
-		TriggerClientEvent('RSGCore:Notify', src, 'medium loot reward this time!', 'primary')
+		lib.notify({ title = 'Loot Reward', description = 'Medium loot reward this time!', type = 'primary', duration = 5000 })
 	elseif chance > 80 then -- large reward
 		local item1 = Config.RewardItems[math.random(1, #Config.RewardItems)]
 		local item2 = Config.RewardItems[math.random(1, #Config.RewardItems)]
@@ -42,9 +42,15 @@ AddEventHandler('rsg-bwbankheist:server:reward', function()
 		Player.Functions.AddItem(item3, Config.LargeRewardAmount)
         TriggerClientEvent("inventory:client:ItemBox", src, RSGCore.Shared.Items[item3], "add")
 		Player.Functions.AddMoney(Config.MoneyRewardType, Config.MoneyRewardAmount, "bank-heist")
-		TriggerClientEvent('RSGCore:Notify', src, 'large loot reward this time!', 'primary')
+		lib.notify({ title = 'Loot Reward', description = 'Large loot reward this time!', type = 'primary', duration = 5000 })
 		Wait(5000)
-		TriggerClientEvent('RSGCore:Notify', src, 'addtional '..Config.MoneyRewardAmount..' '..Config.MoneyRewardType..' looted!', 'primary')
+		lib.notify({
+    title = 'Loot Reward',
+    description = 'Additional ' .. Config.MoneyRewardAmount .. ' ' .. Config.MoneyRewardType .. ' looted!',
+    type = 'primary',
+    duration = 5000
+})
+
 	end
 end)
 
