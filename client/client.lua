@@ -41,10 +41,12 @@ Citizen.CreateThread(function()
 								TriggerServerEvent('rsg-bwbankheist:server:removeItem', 'lockpick', 1)
 								TriggerEvent('rsg-lockpick:client:openLockpick', lockpickFinish)
 							else
-								RSGCore.Functions.Notify('you need a lockpick', 'error')
+								lib.notify({ title = 'Error', description = 'You need a lockpick', type = 'error', duration = 5000 })
+
 							end
 						else
-							RSGCore.Functions.Notify('not enough lawmen on duty!', 'error')
+							lib.notify({ title = 'Error', description = 'Not enough lawmen on duty!', type = 'error', duration = 5000 })
+
 						end
 					end)
 				end
@@ -58,14 +60,14 @@ end)
 
 function lockpickFinish(success)
     if success then
-		RSGCore.Functions.Notify('lockpick successful', 'success')
+		lib.notify({ title = 'Success', description = 'Lockpick successful', type = 'success', duration = 5000 })
 		Citizen.InvokeNative(0x6BAB9442830C7F53, 2117902999, 0)
 		lockpicked = true
 		robberystarted = true
 		handleLockdown()
 		lockdownactive = true
     else
-        RSGCore.Functions.Notify('lockpick unsuccessful', 'error')
+        lib.notify({ title = 'Error', description = 'Lockpick unsuccessful', type = 'error', duration = 5000 })
     end
 end
 
@@ -110,7 +112,7 @@ AddEventHandler('rsg-bwbankheist:client:boom', function()
 			SetEntityHeading(prop, GetEntityHeading(PlayerPedId()))
 			PlaceObjectOnGroundProperly(prop)
 			FreezeEntityPosition(prop,true)
-			RSGCore.Functions.Notify('explosives set, stand well back', 'primary')
+			lib.notify({ title = 'Warning', description = 'Explosives set, stand well back', type = 'primary', duration = 5000 })
 			Wait(10000)
 			AddExplosion(-817.69, -1273.85, 43.66, 25 , 5000.0 ,true , false , 27)
 			DeleteObject(prop)
@@ -119,10 +121,10 @@ AddEventHandler('rsg-bwbankheist:client:boom', function()
 			local alertcoords = GetEntityCoords(PlayerPedId())
 			TriggerServerEvent('police:server:policeAlert', 'St Denis Bank is being robbed')
 		else
-			RSGCore.Functions.Notify('you need dynamite to do that', 'error')
+			lib.notify({ title = 'Error', description = 'You need dynamite to do that', type = 'error', duration = 5000 })
 		end
 	else
-		RSGCore.Functions.Notify('you can\'t do that right now', 'error')
+		lib.notify({ title = 'Error', description = 'You can\'t do that right now', type = 'error', duration = 5000 })
 	end
 end)
 
@@ -152,7 +154,7 @@ AddEventHandler('rsg-bwbankheist:client:checkbwvault1', function()
             while (not HasAnimDictLoaded(animDict)) do
                 Wait(100)
             end
-			RSGCore.Functions.Notify('Started Looting', 'primary')
+			lib.notify({ title = 'Looting Started', description = 'Started looting', type = 'primary', duration = 5000 })
             TaskPlayAnim(player, animDict, anim, 8.0, -8.0, 40000, 1, 0, true, 0, false, 0, false)
             Wait(40000)
             ClearPedTasks(player)
@@ -162,10 +164,10 @@ AddEventHandler('rsg-bwbankheist:client:checkbwvault1', function()
             isLootingbwvault1 = false
             bwvault1Cooldown = 240 -- Set a 4 hour cooldown (240 minutes)
         else
-            RSGCore.Functions.Notify('You must wait before looting this vault again', 'error')
+            lib.notify({ title = 'Error', description = 'You must wait before looting this vault again', type = 'error', duration = 5000 })
         end
     else
-        RSGCore.Functions.Notify('Vault not lootable', 'error')
+        lib.notify({ title = 'Error', description = 'Vault not lootable', type = 'error', duration = 5000 })
     end
 end)
 
@@ -338,9 +340,11 @@ RegisterNetEvent('rsg-bwbankheist:client:policelock', function()
 			for k,v in pairs(Config.VaultDoors) do
 				Citizen.InvokeNative(0x6BAB9442830C7F53,v,1)
 			end
-			RSGCore.Functions.Notify('emergency doors locked', 'success')
+			lib.notify({ title = 'Success', description = 'Emergency doors locked', type = 'success', duration = 5000 })
+
         else
-			RSGCore.Functions.Notify('law enforcement only', 'error')
+			lib.notify({ title = 'Error', description = 'Law enforcement only', type = 'error', duration = 5000 })
+
 		end
     end)
 end)
@@ -352,9 +356,11 @@ RegisterNetEvent('rsg-bwbankheist:client:policeunlock', function()
 			for k,v in pairs(Config.VaultDoors) do
 				Citizen.InvokeNative(0x6BAB9442830C7F53,v,0)
 			end
-			RSGCore.Functions.Notify('emergency doors unlocked', 'success')
+			lib.notify({ title = 'Success', description = 'Emergency doors locked', type = 'success', duration = 5000 })
+
         else
-			RSGCore.Functions.Notify('law enforcement only', 'error')
+			lib.notify({ title = 'Error', description = 'Law enforcement only', type = 'error', duration = 5000 })
+
 		end
     end)
 end)
